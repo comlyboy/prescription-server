@@ -1,0 +1,35 @@
+{
+  "name": "handyman",
+  "version": "1.0.0",
+  "description": "Handyman server app.",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf ./dist && tsc",
+    "dev": "nodemon",
+    "start": "npm run build && node dist/index.js"
+  },
+  "keywords": [],
+  "author": "Cornelius Okeke",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.9",
+    "mongoose-unique-validator": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/cors": "^2.8.5",
+    "@types/express": "^4.17.2",
+    "@types/mongoose": "^5.5.9",
+    "@types/mongoose-unique-validator": "^1.0.3",
+    "@types/node": "^12.7.2",
+    "nodemon": "^1.19.1",
+    "rimraf": "^3.0.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.2"
+  }
+}
