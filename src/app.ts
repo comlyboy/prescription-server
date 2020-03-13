@@ -12,18 +12,7 @@ import connect_DB from './db/connection';
 
 import usersRoutes from './routes/user';
 
-import customersRoutes from './routes/customer';
-import metricsRoutes from './routes/metrics';
-import transactionRoutes from './routes/transaction';
-
-
-import branchRoutes from './routes/admin/branch';
-import engineersRoutes from './routes/admin/engineer';
-import adminWorksRoutes from './routes/admin/works';
-import adminCustomersRoute from './routes/admin/customer';
-import adminMetricsRoutes from './routes/admin/metrics';
-import adminTransactionsRoutes from './routes/admin/transaction';
-
+import prescriptionRoutes from './routes/prescription';
 
 const app = express();
 
@@ -48,48 +37,38 @@ app.use((req, res, next) => {
 
 
 // For various routes
-app.use('/api/v1', customersRoutes);
+app.use('/api/v1', prescriptionRoutes);
 app.use('/api/v1', usersRoutes);
-app.use('/api/v1', metricsRoutes);
-app.use('/api/v1', transactionRoutes);
-
-// admin page
-app.use('/api/v1/admin', engineersRoutes);
-app.use('/api/v1/admin', branchRoutes);
-app.use('/api/v1/admin', adminWorksRoutes);
-app.use('/api/v1/admin', adminCustomersRoute);
-app.use('/api/v1/admin', adminMetricsRoutes);
-app.use('/api/v1/admin', adminTransactionsRoutes);
 
 
 app.get('/', (req: express.Request, res: express.Response): express.Response => {
     return res.send(`<!DOCTYPE html>
     <html>
     <head>
-        <title>Handyman v1 Server</title>
+        <title>Hospital v1 Server</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     </head>
-    <body class="bg-light">
-        <nav class="navbar navbar-light bg-success">
-            <span class="navbar-brand text-light mb-0 h1">Handyman api server v.1</span>
+    <body>
+        <nav class="navbar navbar-light bg-primary">
+            <span class="navbar-brand text-light mb-0 h1">Hospital api server v.1</span>
         </nav>
         <div class="container pt-5">
             <div class="card text-center border-0">
 
                     <div class="card border-0 py-3 text-center">
-                        <div class="h4 text-success">Present Day</div>
+                        <div class="h4 text-primary">Present Day</div>
                         <div class="h6 mb-0 text-muted" id="div1"></div>
                     </div>
                 <div class="card-body mt-5 pt-4">
                     <img src="https://image.flaticon.com/icons/png/128/202/202719.png" alt="welcome_img">
 
-                    <h1 class="h5 mt-5 text-muted">Access through the right channel to explore all what this <span class="text-success font-weight-bold">api/v1</span> has to offer, that's if your are eligible.</h1>
+                    <h1 class="h5 mt-5 text-muted">Access through the right channel to explore all what this <span class="text-primary font-weight-bold">api/v1</span> has to offer, that's if your are eligible.</h1>
                 </div>
 
             </div>
         </div>
         <nav class="navbar fixed-bottom d-flex justify-content-center bg-dark py-5">
-            <span class="lead mb-0 text-light">Copyright  &#9400;2020. Handyman Inc</span>
+            <span class="lead mb-0 text-light">Copyright  &#9400;2020. Hospital Plus Inc</span>
         </nav>
     </body>
     <script>
