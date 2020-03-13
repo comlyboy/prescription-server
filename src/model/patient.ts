@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 
 
-export interface IDrug {
+export interface IPatient {
     _id?: string;
     name: string;
     description: string
@@ -12,7 +12,7 @@ export interface IDrug {
 
 
 
-const drugShema = new mongoose.Schema({
+const patientShema = new mongoose.Schema({
     name: { type: String, required: true, lowercase: true, trim: true },
     description: { type: String, required: true, trim: true },
     addedAt: { type: String, default: Date.now }
@@ -20,6 +20,6 @@ const drugShema = new mongoose.Schema({
 
 
 
-drugShema.plugin(uniqueValidator);
+patientShema.plugin(uniqueValidator);
 
-export default mongoose.model<any>('Drug', drugShema);
+export default mongoose.model<any>('Patient', patientShema);

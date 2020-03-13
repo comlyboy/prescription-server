@@ -1,4 +1,4 @@
-export function generateDrugId(length: number, initial?: string) {
+export function generateId(length: number, initial?: string) {
     let _initial = initial;
     let _length = length;
     let timestamp = +new Date;

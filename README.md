@@ -1,4 +1,4 @@
-# 🧰 Handyman server v1
+# 🧰 Prescription server v1
 
 
 #### `npm run start:dev`
