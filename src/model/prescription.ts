@@ -4,6 +4,7 @@ import uniqueValidator from 'mongoose-unique-validator';
 
 export interface IPrescription {
     _id?: string;
+    drugId: string;
     fomula: string;
     duration: string
     patientId: string
@@ -13,11 +14,9 @@ export interface IPrescription {
 
 
 const prescriptionShema = new mongoose.Schema({
-    patientName: { type: String, required: true, lowercase: true, trim: true },
-    age: { type: Number, required: true, trim: true },
+    drugId: { type: mongoose.Schema.Types.ObjectId, ref: "Drug", required: true },
     fomula: { type: String, required: true, lowercase: true, trim: true },
     duration: { type: String, required: true, trim: true },
-    // userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     patientId: { type: mongoose.Schema.Types.ObjectId, ref: "Patient", required: true },
     createdAt: { type: String, default: Date.now }
 });

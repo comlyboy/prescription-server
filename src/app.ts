@@ -11,8 +11,9 @@ import connect_DB from './db/connection';
 
 
 import usersRoutes from './routes/user';
-
 import prescriptionRoutes from './routes/prescription';
+import patientRoutes from './routes/patient';
+import drugRoutes from './routes/drug';
 
 const app = express();
 
@@ -37,8 +38,11 @@ app.use((req, res, next) => {
 
 
 // For various routes
-app.use('/api/v1', prescriptionRoutes);
 app.use('/api/v1', usersRoutes);
+
+app.use('/api/v1', prescriptionRoutes);
+app.use('/api/v1', patientRoutes);
+app.use('/api/v1', drugRoutes);
 
 
 app.get('/', (req: express.Request, res: express.Response): express.Response => {

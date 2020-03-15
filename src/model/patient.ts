@@ -6,7 +6,7 @@ export interface IPatient {
     _id?: string;
     firstName: string;
     lastName: string;
-    phoneNumber: string;
+    gender: string;
     age: number;
     address: string
     addedAt?: string;
@@ -19,7 +19,7 @@ export interface IPatient {
 const patientShema = new mongoose.Schema({
     firstName: { type: String, required: true, lowercase: true, trim: true },
     lastName: { type: String, required: true, lowercase: true, trim: true },
-    phoneNumber: { type: String, required: true, lowercase: true, trim: true },
+    gender: { type: String, required: true, lowercase: true, trim: true },
     age: { type: Number, required: true, trim: true },
     address: { type: String, required: true, lowercase: true, trim: true },
     addedAt: { type: String, default: Date.now },
