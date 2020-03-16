@@ -19,7 +19,7 @@ function addDrug(req: express.Request, res: express.Response, next: express.Next
     });
 
     try {
-        const result = drugOBJ.save();
+        drugOBJ.save();
 
         res.status(201).json({
             message: "Successfully!",
@@ -34,8 +34,8 @@ function addDrug(req: express.Request, res: express.Response, next: express.Next
 }
 
 
-router.get("/drug", authCheck, getPatients);
-async function getPatients(req: express.Request, res: express.Response, next: express.NextFunction) {
+router.get("/drug", authCheck, getDrugs);
+async function getDrugs(req: express.Request, res: express.Response, next: express.NextFunction) {
 
     try {
         const drugs: IPatient[] = await Drug.find({
@@ -54,31 +54,49 @@ async function getPatients(req: express.Request, res: express.Response, next: ex
     }
 }
 
+// Getting one customer for editing and details pages
+router.get("/drug/:_id", authCheck, getDrugById);
+async function getDrugById(req: express.Request, res: express.Response, next: express.NextFunction) {
+
+    try {
+        const drug: IDrug = await Drug.findById({
+            _id: req.params._id,
+        })
+
+        res.status(200).json(drug);
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Somethiing went wrong!"
+        });
+    }
+}
+
+
+
 
 router.put("/drug/:_id", authCheck, updateDrug)
 async function updateDrug(req: express.Request, res: express.Response, next: express.NextFunction) {
-    const drug_req_body: IPatient = req.body;
+    const drug_req_body: IDrug = req.body;
 
     try {
-        const drug_in_db: IPatient = await Patient.findById({
+        const drug_in_db: IDrug = await Drug.findById({
             _id: req.params._id,
-            userId: req["userData"].userId
         }).exec();
 
         if (!drug_in_db) {
             return res.status(404).json({ message: "Drug does not exist!" });
         };
 
-        const custRealObj = JSON.parse(JSON.stringify(drug_in_db));
+        const drugRealObj = JSON.parse(JSON.stringify(drug_in_db));
 
         // assigning the edited inputs to the customer object
-        const drug = Object.assign({}, drug_req_body, {
-            // firstName: customer_req_body.firstName,
-            // lastName: customer_req_body.lastName,
-            // phoneNumber: customer_req_body.phoneNumber
+        const drug = Object.assign({}, drugRealObj, {
+            name: drug_req_body.name,
+            description: drug_req_body.description
         });
 
-        const result = await Patient.updateOne(
+        const result = await Drug.updateOne(
             { _id: req.params._id },
             drug
         )
@@ -86,7 +104,7 @@ async function updateDrug(req: express.Request, res: express.Response, next: exp
         if (result.nModified > 0) {
             res.status(200).json({ message: "Updated successfully!" });
         } else {
-            res.status(401).json({ message: "You are not authorised!" });
+            res.status(401).json({ message: "Not successfull!" });
         }
     } catch (error) {
         res.status(500).json({
@@ -98,8 +116,8 @@ async function updateDrug(req: express.Request, res: express.Response, next: exp
 
 
 // Deleting a patient
-router.delete("/drug/:_id", authCheck, deletePatient);
-async function deletePatient(req: express.Request, res: express.Response, next: express.NextFunction) {
+router.delete("/drug/:_id", authCheck, deleteDrug);
+async function deleteDrug(req: express.Request, res: express.Response, next: express.NextFunction) {
 
     try {
         await Drug.deleteOne({

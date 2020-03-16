@@ -67,41 +67,42 @@ async function getPatients(req: express.Request, res: express.Response, next: ex
 
 
 
-router.put("/patient/:_id", authCheck, updateCustomer)
-async function updateCustomer(req: express.Request, res: express.Response, next: express.NextFunction) {
-    const customer_req_body: IPatient = req.body;
+router.put("/patient/:_id", authCheck, updatePatient)
+async function updatePatient(req: express.Request, res: express.Response, next: express.NextFunction) {
+    const patient_req_body: IPatient = req.body;
 
     try {
-        const customer_in_db: IPatient = await Patient.findById({
+        const patient_in_db: IPatient = await Patient.findById({
             _id: req.params._id,
-            userId: req["userData"].userId
         }).exec();
 
-        if (customer_in_db) {
-            const custRealObj = JSON.parse(JSON.stringify(customer_in_db));
+        if (patient_in_db) {
 
-            // assigning the edited inputs to the customer object
-            const patient = Object.assign({}, custRealObj, {
-                // firstName: customer_req_body.firstName,
-                // lastName: customer_req_body.lastName,
-                // phoneNumber: customer_req_body.phoneNumber
-            });
-
-            const result = await Patient.updateOne(
-                { _id: req.params._id, engineer: req["userData"].userId },
-                patient
-            )
-
-            if (result.nModified > 0) {
-                res.status(200).json({ message: "Updated successfully!" });
-            } else {
-                res.status(401).json({ message: "You are not authorised!" });
-            }
 
         } else {
             res.status(404).json({ message: "Customer does not exist!" });
         }
+        const patientRealObj = JSON.parse(JSON.stringify(patient_in_db));
 
+        // assigning the edited inputs to the customer object
+        const patient = Object.assign({}, patientRealObj, {
+            firstName: patient_req_body.firstName,
+            lastName: patient_req_body.lastName,
+            age: patient_req_body.age,
+            gender: patient_req_body.gender,
+            address: patient_req_body.address
+        });
+
+        const result = await Patient.updateOne(
+            { _id: req.params._id },
+            patient
+        )
+
+        if (result.nModified > 0) {
+            res.status(200).json({ message: "Updated successfully!" });
+        } else {
+            res.status(401).json({ message: "Not successfull!" });
+        }
     } catch (error) {
         res.status(500).json({
             message: "Something went wrong!"
@@ -118,7 +119,6 @@ async function getPatientById(req: express.Request, res: express.Response, next:
     try {
         const patient: IPatient = await Patient.findById({
             _id: req.params._id,
-            engineer: req["userData"].userId
         })
 
         const prescriptions: IPrescription[] = await Prescription.find({
@@ -136,8 +136,6 @@ async function getPatientById(req: express.Request, res: express.Response, next:
         });
     }
 }
-
-
 
 
 // Deleting a patient
