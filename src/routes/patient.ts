@@ -20,7 +20,6 @@ function addPatient(req: express.Request, res: express.Response, next: express.N
         gender: _patient_req_body.gender,
         address: _patient_req_body.address,
         userId: req["userData"].userId,
-
     });
 
     try {
@@ -45,7 +44,7 @@ async function getPatients(req: express.Request, res: express.Response, next: ex
     try {
         const patients: IPatient[] = await Patient.find({
             userId: req["userData"].userId
-        }).sort('-addedAt').exec();
+        }).sort('firstName').exec();
 
         const totalPatients: number = await Patient.countDocuments({
             userId: req["userData"].userId
@@ -65,6 +64,29 @@ async function getPatients(req: express.Request, res: express.Response, next: ex
 
 
 
+router.get("/patient/:_id", authCheck, getPatientById);
+async function getPatientById(req: express.Request, res: express.Response, next: express.NextFunction) {
+
+    try {
+        const patient: IPatient = await Patient.findById({
+            _id: req.params._id,
+        })
+
+        const prescriptions: IPrescription[] = await Prescription.find({
+            patientId: req.params._id
+        }).sort('-createdAt').exec();
+
+        res.status(200).json({
+            patient: patient,
+            prescriptions: prescriptions
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Somethiing went wrong!"
+        });
+    }
+}
 
 
 router.put("/patient/:_id", authCheck, updatePatient)
@@ -109,32 +131,6 @@ async function updatePatient(req: express.Request, res: express.Response, next: 
         });
     }
 
-}
-
-
-// Getting one customer for editing and details pages
-router.get("/patient/:_id", authCheck, getPatientById);
-async function getPatientById(req: express.Request, res: express.Response, next: express.NextFunction) {
-
-    try {
-        const patient: IPatient = await Patient.findById({
-            _id: req.params._id,
-        })
-
-        const prescriptions: IPrescription[] = await Prescription.find({
-            patientId: req.params._id
-        })
-
-        res.status(200).json({
-            patient: patient,
-            prescriptions: prescriptions
-        });
-
-    } catch (error) {
-        res.status(500).json({
-            message: "Somethiing went wrong!"
-        });
-    }
 }
 
 

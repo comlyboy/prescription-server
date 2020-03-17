@@ -1,7 +1,6 @@
 import express from "express";
 
 import authCheck from "../middleware/auth-check";
-import Patient, { IPatient } from "../model/patient";
 import Drug, { IDrug } from "../model/drug";
 
 const router = express.Router();
@@ -38,8 +37,8 @@ router.get("/drug", authCheck, getDrugs);
 async function getDrugs(req: express.Request, res: express.Response, next: express.NextFunction) {
 
     try {
-        const drugs: IPatient[] = await Drug.find({
-        }).sort('-addedAt').exec();
+        const drugs: IDrug[] = await Drug.find({
+        }).sort('name').exec();
         const totalDrugs: number = drugs.length;
 
         res.status(200).json({
@@ -71,8 +70,6 @@ async function getDrugById(req: express.Request, res: express.Response, next: ex
         });
     }
 }
-
-
 
 
 router.put("/drug/:_id", authCheck, updateDrug)
