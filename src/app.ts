@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 
 // Connecting to mongoDB database
-// connect_DB();
+connect_DB();
 
 
 // permissions
@@ -72,7 +72,7 @@ app.get('/', (req: express.Request, res: express.Response): express.Response => 
             </div>
         </div>
         <nav class="navbar fixed-bottom d-flex justify-content-center bg-dark py-5">
-            <span class="lead mb-0 text-light">Copyright  &#9400;2020. Hospiman Inc</span>
+            <span class="lead mb-0 text-light">Copyright  &#9400;2020. Hospital Plus Inc</span>
         </nav>
     </body>
     <script>
