@@ -14,6 +14,7 @@ import usersRoutes from './routes/user';
 import prescriptionRoutes from './routes/prescription';
 import patientRoutes from './routes/patient';
 import drugRoutes from './routes/drug';
+import metricsRoute from './routes/metrics';
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use('/api/v1', usersRoutes);
 app.use('/api/v1', prescriptionRoutes);
 app.use('/api/v1', patientRoutes);
 app.use('/api/v1', drugRoutes);
+app.use('/api/v1', metricsRoute);
 
 
 app.get('/', (req: express.Request, res: express.Response): express.Response => {
