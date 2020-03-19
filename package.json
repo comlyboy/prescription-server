@@ -2,11 +2,11 @@
   "name": "handyman",
   "version": "1.0.0",
   "description": "Handyman server app.",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "rimraf ./dist && tsc",
     "dev": "nodemon",
-    "start": "npm run build && node index.js"
+    "start": "npm run build && node dist/index.js"
   },
   "keywords": [],
   "author": "Cornelius Okeke",
