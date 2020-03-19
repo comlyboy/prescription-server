@@ -1,6 +1,6 @@
     
 //@ts-check
-import app from "../src/app";
+import app from "./app";
 const debug = require("debug")("node-angular");
 import http from "http";
 

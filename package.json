@@ -5,8 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rimraf ./dist && tsc",
-    "dev": "nodemon",
-    "start": "npm run build && node dist/index.js"
+    "dev:serve": "nodemon",
+    "prod:serve": "node dist/index.js",
+    "dev": "npm run dev:serve",
+    "start": "npm run build && npm run prod:serve"
   },
   "keywords": [],
   "author": "Cornelius Okeke",
