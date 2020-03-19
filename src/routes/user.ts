@@ -5,10 +5,11 @@
 //@ts-check
 
 import express from 'express';
-import User, { IUser } from '../model/user';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+
 import authCheck from '../middleware/auth-check';
+import User, { IUser } from '../model/user';
 
 
 const router = express.Router();
