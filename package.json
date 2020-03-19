@@ -2,7 +2,7 @@
   "name": "handyman",
   "version": "1.0.0",
   "description": "Handyman server app.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "rimraf ./dist && tsc",
     "dev": "nodemon",
