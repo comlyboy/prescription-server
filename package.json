@@ -8,7 +8,7 @@
     "dev:serve": "nodemon",
     "prod:serve": "node dist/index.js",
     "dev": "npm run dev:serve",
-    "start": "npm run prod:serve"
+    "start": "npm run build && npm run prod:serve"
   },
   "keywords": [],
   "author": "Cornelius Okeke",
