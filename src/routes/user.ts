@@ -14,19 +14,20 @@ import authCheck from '../middleware/auth-check';
 const router = express.Router();
 
 
-router.post("/user/signup", signupUser)
+router.post("/signup", signupUser)
 async function signupUser(req: express.Request, res: express.Response, next: express.NextFunction) {
 
     const user_req_body: IUser = req.body;
 
     try {
 
-        const user = await User.findOne({ userName: req.body.userName }).exec();
-        if (user) {
-            return res.status(401).json({
-                message: "Username already existing"
-            });
-        }
+        // const user = await User.findOne({ userName: req.body.userName }).exec();
+        // if (user) {
+        //     return res.status(401).json({
+        //         message: "Username already existing"
+        //     });
+        // }
+        console.log(user_req_body);
 
         const hash = await bcrypt.hash(req.body.password, 10)
 
@@ -34,9 +35,13 @@ async function signupUser(req: express.Request, res: express.Response, next: exp
             firstName: user_req_body.firstName,
             lastName: user_req_body.lastName,
             userName: user_req_body.userName,
+            email: user_req_body.email,
             password: hash
         });
-        const result = await new_user_obj.save()
+
+        console.log(new_user_obj);
+        const result = await new_user_obj.save();
+        console.log(result);
 
         res.status(201).json({
             message: "Success!",
@@ -51,7 +56,7 @@ async function signupUser(req: express.Request, res: express.Response, next: exp
 }
 
 
-router.post('/user/login', loginUser)
+router.post('/login', loginUser)
 async function loginUser(req: express.Request, res: express.Response, next: express.NextFunction) {
 
     try {

@@ -3,6 +3,7 @@ import express from "express";
 import authCheck from "../middleware/auth-check";
 import Patient, { IPatient } from "../model/patient";
 import Prescription, { IPrescription } from "../model/prescription";
+import Drug, { IDrug } from "../model/drug";
 
 const router = express.Router();
 
@@ -72,13 +73,25 @@ async function getPatientById(req: express.Request, res: express.Response, next:
             _id: req.params._id,
         })
 
-        const prescriptions: IPrescription[] = await Prescription.find({
+        const fetchedPrescriptions: IPrescription[] = await Prescription.find({
             patientId: req.params._id
         }).sort('-createdAt').exec();
 
+        const drugIds = fetchedPrescriptions.map((item) => item.drugId);
+        const drug: IDrug[] = await Drug.find({ _id: { $in: drugIds } }).exec();
+
+        const _fetchedPrescriptionsPlain: IPrescription[] = JSON.parse(JSON.stringify(fetchedPrescriptions));
+
+        const _drug = JSON.parse(JSON.stringify(drug));
+
+        const _fetchedPrescriptions = _fetchedPrescriptionsPlain.map((item) => {
+            item["drugId"] = _drug.find((br) => br._id === item.drugId);
+            return item;
+        });
+
         res.status(200).json({
             patient: patient,
-            prescriptions: prescriptions
+            prescriptions: _fetchedPrescriptions
         });
 
     } catch (error) {

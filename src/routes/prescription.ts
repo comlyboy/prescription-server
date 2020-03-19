@@ -129,10 +129,9 @@ async function updatePrescription(req: express.Request, res: express.Response, n
         const prescription_in_db: IPrescription = await Prescription.findById({
             _id: req.params._id,
         }).exec();
-
-        if (prescription_in_db) {
-            res.status(404).json({ message: "Customer does not exist!" });
-        }
+        if (!prescription_in_db) {
+            return res.status(404).json({ message: "Prescription does not exist!" });
+        };
 
 
         const prescriptionRealObj = JSON.parse(JSON.stringify(prescription_in_db));
@@ -151,7 +150,7 @@ async function updatePrescription(req: express.Request, res: express.Response, n
         )
 
         if (result.nModified > 0) {
-            res.status(200).json({ message: "Updated successfully!" });
+            res.status(200).json({ message: "Successfully!" });
         } else {
             res.status(401).json({ message: "Not successfull!" });
         }
@@ -169,12 +168,13 @@ router.delete("/prescription/:_id", authCheck, deletePrescription);
 async function deletePrescription(req: express.Request, res: express.Response, next: express.NextFunction) {
 
     try {
-        Prescription.deleteOne({
+        const result = Prescription.deleteOne({
             _id: req.params._id,
         })
 
+        // console.log((await result).deletedCount);
         res.status(201).json({
-            message: "Successfully!",
+            message: "Update successfully!",
         });
 
     } catch (error) {
