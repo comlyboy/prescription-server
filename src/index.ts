@@ -1,7 +1,7 @@
     
 //@ts-check
 import app from "./app";
-const debug = require("debug")("node-angular");
+// const debug = require("debug")("node-angular");
 import http from "http";
 
 const normalizePort = val => {
@@ -45,9 +45,9 @@ const onError = error => {
 
 
 const onListening = () => {
-    const addr = server.address();
-    const bind = typeof addr === "string" ? "pipe " + addr : "port " + port;
-    debug(`Listening on ${bind}`);
+    // const addr = server.address();
+    // const bind = typeof addr === "string" ? "pipe " + addr : "port " + port;
+    // debug(`Listening on ${bind}`);
     console.log(`Listening on http://localhost:${port}`)
 };
 
