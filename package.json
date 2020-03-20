@@ -8,7 +8,6 @@
     "dev:serve": "nodemon",
     "prod:serve": "node dist/index.js",
     "dev": "npm run dev:serve",
-    "postinstall": "npm run build",
     "start": "npm run prod:serve"
   },
   "keywords": [],
