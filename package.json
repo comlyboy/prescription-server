@@ -2,11 +2,11 @@
   "name": "handyman",
   "version": "1.0.0",
   "description": "Handyman server app.",
-  "main": "dist/index.js",
+  "main": "app/index.js",
   "scripts": {
-    "build": "rimraf ./dist && tsc",
+    "build": "rimraf ./app && tsc",
     "dev:serve": "nodemon",
-    "prod:serve": "node dist/index.js",
+    "prod:serve": "node app/index.js",
     "dev": "npm run dev:serve",
     "start": "npm run build && npm run prod:serve"
   },
